@@ -1,1 +1,1 @@
-# euro2020_webscraper
+# Euro 2020 webscraping
