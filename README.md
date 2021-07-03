@@ -1,7 +1,7 @@
 <!-- PROJECT LOGO -->
 <br />
-<p align="center">
-  <p align="center">
+<p>
+  <p>
     <strong>EURO 2020 Web Scraper</strong>
     <br />
     <a href="https://github.com/othneildrew/Best-README-Template">View Demo</a>
