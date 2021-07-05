@@ -2,6 +2,10 @@
 <br />
 <p align="center">
   <p align="center">
+    <a href="https://github.com/othneildrew/euro2020_webscraper">
+      <img src="UEFA_Euro_2020.jpg" alt="Logo" width="80" height="80">
+    </a>
+    
     <strong>EURO 2020 Web Scraper</strong>
     <br />
     <a href="https://github.com/othneildrew/Best-README-Template">View Demo</a>
