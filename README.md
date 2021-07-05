@@ -1,11 +1,11 @@
 <!-- PROJECT LOGO -->
 <br />
 <p align="center">
+   <a href="https://github.com/Mohammad-Afsari/euro2020_webscraper">
+      <img src="images/UEFA_Euro_2020.png" alt="Euro logo" width="80" height="80">
+   </a>
+
   <p align="center">
-    <a href="https://github.com/Mohammad-Afsari/euro2020_webscraper">
-      <img src="images/UEFA_Euro_2020.png" alt="UEFA_Euro_2020" width="80" height="80">
-    </a>
-    
     <strong>EURO 2020 Web Scraper</strong>
     <br />
     <a href="https://github.com/othneildrew/Best-README-Template">View Demo</a>
