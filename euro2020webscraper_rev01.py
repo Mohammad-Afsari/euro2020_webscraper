@@ -12,12 +12,15 @@
 from bs4 import BeautifulSoup
 import requests
 import pandas as pd
+import pyodbc
 
 # -------------------------------------------------------------------------------------------------------------#
 # Section 1: Gather and load data
 # -------------------------------------------------------------------------------------------------------------#
 
 # URL that's being scraped
+# Would work on any of the statistics web pages for any team e.g.
+# url = 'https://www.uefa.com/uefaeuro-2020/{CHOSEN TEAM}/statistics/'
 url = 'https://www.uefa.com/uefaeuro-2020/teams/58837--czech-republic/statistics/'
 
 # HTTP request 
@@ -53,6 +56,27 @@ statistics_table = {
 # Section 2: Connect to SQL database
 # -------------------------------------------------------------------------------------------------------------#
 
+# SSMS connection
+SERVER = 'tcp:im-test.database.windows.net'
+DB = 'IM-Test-Database'
+UID = 'client-IM'
+PWD = 'IM2021LearnSQL'
+# Create connection to SSMS
+sql_conn = pyodbc.connect(("DRIVER={ODBC Driver 17 for SQL Server};" +
+"SERVER="+SERVER+";" +
+"DATABASE="+DB+";" +
+"UID="+UID+";" +
+"PWD="+PWD))
+
+# Create an empty array to append into and execute table required from SSMS
+rawData = []
+cursor = sql_conn.cursor()
+cursor.execute("SELECT * FROM [dbo].[NR_Machine_learning_data]") #Confirm SQL table name
+
+
+# -------------------------------------------------------------------------------------------------------------#
+# Section 3: Append to SQL database
+# -------------------------------------------------------------------------------------------------------------#
 
 
 
