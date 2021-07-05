@@ -3,7 +3,7 @@
 <p align="center">
   <p align="center">
     <a href="https://github.com/Mohammad-Afsari/euro2020_webscraper">
-      <img src="UEFA_Euro_2020.jpg" alt="UEFA_Euro_2020" width="80" height="80">
+      <img src="UEFA_Euro_2020.png" alt="UEFA_Euro_2020" width="80" height="80">
     </a>
     
     <strong>EURO 2020 Web Scraper</strong>
