@@ -73,7 +73,6 @@ rawData = []
 cursor = sql_conn.cursor()
 cursor.execute("SELECT * FROM [dbo].[NR_Machine_learning_data]") #Confirm SQL table name
 
-
 # -------------------------------------------------------------------------------------------------------------#
 # Section 3: Append to SQL database
 # -------------------------------------------------------------------------------------------------------------#
