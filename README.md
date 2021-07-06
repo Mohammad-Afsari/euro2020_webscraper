@@ -2,17 +2,17 @@
 <br />
 <p align="center">
    <a href="https://github.com/Mohammad-Afsari/euro2020_webscraper">
-      <img src="images/UEFA_Euro_2020.png" alt="Euro logo" width="80" height="80">
+      <img src="images/UEFA_Euro_2020.png" alt="Euro logo" width="300" height="300">
    </a>
 
   <p align="center">
     <strong>EURO 2020 Web Scraper</strong>
     <br />
-    <a href="https://github.com/othneildrew/Best-README-Template">View Demo</a>
+    <a href="https://github.com/Mohammad-Afsari/euro2020_webscraper">View Demo</a>
     ·
-    <a href="https://github.com/othneildrew/Best-README-Template/issues">Report Bug</a>
+    <a href="https://github.com/Mohammad-Afsari/euro2020_webscraper/issues">Report Bug</a>
     ·
-    <a href="https://github.com/othneildrew/Best-README-Template/issues">Request Feature</a>
+    <a href="https://github.com/Mohammad-Afsari/euro2020_webscraper/issues">Request Feature</a>
   </p>
 </p>
 
