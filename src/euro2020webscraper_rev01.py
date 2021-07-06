@@ -62,16 +62,21 @@ DB = 'IM-Test-Database'
 UID = 'client-IM'
 PWD = 'IM2021LearnSQL'
 # Create connection to SSMS
-sql_conn = pyodbc.connect(("DRIVER={ODBC Driver 17 for SQL Server};" +
-"SERVER="+SERVER+";" +
-"DATABASE="+DB+";" +
-"UID="+UID+";" +
-"PWD="+PWD))
+sql_conn = pyodbc.connect(("Trusted_Connection=yes;" +
+                            "DRIVER={ODBC Driver 17 for SQL Server};" +
+                           "SERVER="+SERVER+";" +
+                           "Port=1433" +
+                           "DATABASE="+DB+";" +
+                           "UID="+UID+";" +
+                           "PWD="+PWD
+                           ))
+
+
 
 # Create an empty array to append into and execute table required from SSMS
 rawData = []
 cursor = sql_conn.cursor()
-cursor.execute("SELECT * FROM [dbo].[NR_Machine_learning_data]") #Confirm SQL table name
+cursor.execute("SELECT * FROM [dbo].[Table]") #Confirm SQL table name
 
 # -------------------------------------------------------------------------------------------------------------#
 # Section 3: Append to SQL database
