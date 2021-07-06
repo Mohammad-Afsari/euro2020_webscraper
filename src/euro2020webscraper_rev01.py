@@ -72,7 +72,6 @@ sql_conn = pyodbc.connect(("Trusted_Connection=yes;" +
                            ))
 
 
-
 # Create an empty array to append into and execute table required from SSMS
 rawData = []
 cursor = sql_conn.cursor()
