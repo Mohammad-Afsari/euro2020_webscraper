@@ -1,3 +1,4 @@
+#%%
 # -------------------------------------------------------------------------------------------------------------#
 # Introduction: Euro 2020 statistics scraper
 # -------------------------------------------------------------------------------------------------------------#
@@ -14,6 +15,7 @@ import requests
 import pandas as pd
 import pyodbc
 
+#%%
 # -------------------------------------------------------------------------------------------------------------#
 # Section 1: Gather and load data
 # -------------------------------------------------------------------------------------------------------------#
@@ -52,34 +54,58 @@ statistics_table = {
         team_name[0]: stats[0] + " Matches: " + stats[1] + " Wins " + stats[2] + " Draw " + stats[3] + " Lost"
         }
 
+#%%
 # -------------------------------------------------------------------------------------------------------------#
 # Section 2: Connect to SQL database
 # -------------------------------------------------------------------------------------------------------------#
 
 # SSMS connection
-SERVER = 'tcp:im-test.database.windows.net'
-DB = 'IM-Test-Database'
-UID = 'client-IM'
-PWD = 'IM2021LearnSQL'
-# Create connection to SSMS
-sql_conn = pyodbc.connect(("Trusted_Connection=yes;" +
-                            "DRIVER={ODBC Driver 17 for SQL Server};" +
-                           "SERVER="+SERVER+";" +
-                           "Port=1433" +
-                           "DATABASE="+DB+";" +
-                           "UID="+UID+";" +
-                           "PWD="+PWD
-                           ))
+driver = 'DRIVER={ODBC Driver 17 for SQL Server}'
+server = 'SERVER=tcp:im-test.database.windows.net'
+port = 'PORT=1433'
+database = 'DATABASE=IM-Test-Database' 
+username = 'UID=client_IM' 
+password = 'PWD=IM2021LearnSQL'
 
+conn = pyodbc.connect(';'.join([driver,server,port,database,username,password]))
+cursor = conn.cursor()
 
-# Create an empty array to append into and execute table required from SSMS
-rawData = []
-cursor = sql_conn.cursor()
-cursor.execute("SELECT * FROM [dbo].[Table]") #Confirm SQL table name
-
+# Execute connection and return results in the table
+cursor.execute("SELECT * FROM [IM-Test-Database].[dbo].[Table]") #Confirm SQL table name
+print([d[0] for d in cursor.description])
+for r in cursor.fetchall():
+    print(r)
+    
+#%%
 # -------------------------------------------------------------------------------------------------------------#
 # Section 3: Append to SQL database
 # -------------------------------------------------------------------------------------------------------------#
+# Build SQL string to input into IM Database
+author = 'Mohammad Afsari'
+sql_string = f'''SET NOCOUNT ON;
+IF NOT EXISTS (SELECT * FROM [IM-Test-Database].[dbo].[Table] WHERE CONVERT(varchar,[Author]) = '{author}')
+BEGIN 
+INSERT INTO [IM-Test-Database].[dbo].[Table] ([Author],[Data])
+VALUES ('{author},'{statistics_table}');
+END
+ELSE
+BEGIN
+UPDATE [IM-Test-Database].[dbo].[Table] 
+SET [Data] = '{statistics_table}'
+WHERE CONVERT(varchar,[Author]) = '{author}'
+END;
+SELECT * FROM [IM-Test-Database].[dbo].[Table];'''
+print(sql_string)
+
+cursor.execute(sql_string)
+
+
+
+
+
+
+
+
 
 
 
