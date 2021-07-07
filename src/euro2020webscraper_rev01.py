@@ -23,7 +23,7 @@ import pyodbc
 # URL that's being scraped
 # Would work on any of the statistics web pages for any team e.g.
 # url = 'https://www.uefa.com/uefaeuro-2020/{CHOSEN TEAM}/statistics/'
-url = 'https://www.uefa.com/uefaeuro-2020/teams/58837--czech-republic/statistics/'
+url = 'https://www.uefa.com/uefaeuro-2020/teams/35--denmark/statistics/'
 
 # HTTP request 
 html_page  = requests.get(url)
@@ -49,10 +49,9 @@ lost = pd.Series(classes[3]).to_frame()
 # Combine statis into an array
 stats = [matches_played[0][0], won[0][0], drawn[0][0], lost[0][0]]
 
-# Put into dictionary
-statistics_table = {
-        team_name[0]: stats[0] + " Matches: " + stats[1] + " Wins " + stats[2] + " Draw " + stats[3] + " Lost"
-        }
+# Put into string
+statistics_table = team_name[0] + ": " + stats[0] + " Matches played: " + stats[1] + " Wins " + stats[2] + " Draw " + stats[3] + " Lost" 
+
 
 #%%
 # -------------------------------------------------------------------------------------------------------------#
@@ -86,7 +85,7 @@ sql_string = f'''SET NOCOUNT ON;
 IF NOT EXISTS (SELECT * FROM [IM-Test-Database].[dbo].[Table] WHERE CONVERT(varchar,[Author]) = '{author}')
 BEGIN 
 INSERT INTO [IM-Test-Database].[dbo].[Table] ([Author],[Data])
-VALUES ('{author},'{statistics_table}');
+VALUES ('{author}','{statistics_table}');
 END
 ELSE
 BEGIN
@@ -98,18 +97,5 @@ SELECT * FROM [IM-Test-Database].[dbo].[Table];'''
 print(sql_string)
 
 cursor.execute(sql_string)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+conn.commit()
 
