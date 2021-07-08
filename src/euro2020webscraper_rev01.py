@@ -23,7 +23,7 @@ import pyodbc
 # URL that's being scraped
 # Would work on any of the statistics web pages for any team e.g.
 # url = 'https://www.uefa.com/uefaeuro-2020/{CHOSEN TEAM}/statistics/'
-url = 'https://www.uefa.com/uefaeuro-2020/teams/35--denmark/statistics/'
+url = 'https://www.uefa.com/uefaeuro-2020/teams/58837--czech-republic/'
 
 # HTTP request 
 html_page  = requests.get(url)
@@ -36,21 +36,42 @@ initial_soup = BeautifulSoup(html, 'html.parser')
 team_name = initial_soup.find_all("h1",{"class":"team-name desktop"})
 team_name = [i.text for i in team_name]
 
-# Find html class assosiated to the relvant statistics and push to pandas dataframe
-classes = initial_soup.find_all("div",{"class":"statistics--list--data"})
-classes = [i.text for i in classes]
+# Find html class assosiated to the relvant statistics
+classes = initial_soup.find("div",{"class":"team--statistics--list col-xs-12"})
+stats_arr = []
+for i in classes.stripped_strings:
+    stats_arr.append(repr(i))
 
-# Extract relevant statistics
-matches_played = pd.Series(classes[0]).to_frame()
-won = pd.Series(classes[1]).to_frame()
-drawn = pd.Series(classes[2]).to_frame()
-lost = pd.Series(classes[3]).to_frame()
+# As the last value only shows 'Cards' we need to specify yellow/red cards
+stats_arr[22] = "'Yellow Cards'"
+stats_arr.insert(24,"'Red Cards'")
 
-# Combine statis into an array
-stats = [matches_played[0][0], won[0][0], drawn[0][0], lost[0][0]]
+# Split into text string and values
+stats_textstr = stats_arr[0::2]
+stats_values = stats_arr[1::2]
 
-# Put into string
-statistics_table = team_name[0] + ": " + stats[0] + " Matches played: " + stats[1] + " Wins " + stats[2] + " Draw " + stats[3] + " Lost" 
+# Convert into pandas dataframe
+stats_textstr = pd.DataFrame({'col': stats_textstr})
+stats_values = pd.DataFrame({'col': stats_values})
+stats_merge = pd.merge(stats_textstr, stats_values, left_index=True, right_index=True)
+
+# Merge stats together
+stats_merge['col_x'] = stats_merge['col_x'].str.replace("'",'')
+stats_merge['col_y'] = stats_merge['col_y'].str.replace("'",'')
+stats = (stats_merge['col_x'] + "=" + stats_merge['col_y'])
+stats = pd.DataFrame({'Statistics':stats})
+
+# loop through stats and add a coma
+for i in stats:
+    stats_format = ''
+    stats_format += stats[i] + ","
+    
+# Convert to string
+stats_list = stats_format.to_list()
+stats_str = ''.join(stats_list)
+limit = len(stats_str)
+statistics = stats_str[:limit - 1]
+statistics = team_name[0] + " Euro 2020 statistics: " + statistics
 
 
 #%%
@@ -85,12 +106,12 @@ sql_string = f'''SET NOCOUNT ON;
 IF NOT EXISTS (SELECT * FROM [IM-Test-Database].[dbo].[Table] WHERE CONVERT(varchar,[Author]) = '{author}')
 BEGIN 
 INSERT INTO [IM-Test-Database].[dbo].[Table] ([Author],[Data])
-VALUES ('{author}','{statistics_table}');
+VALUES ('{author}','{statistics}');
 END
 ELSE
 BEGIN
 UPDATE [IM-Test-Database].[dbo].[Table] 
-SET [Data] = '{statistics_table}'
+SET [Data] = '{statistics}'
 WHERE CONVERT(varchar,[Author]) = '{author}'
 END;
 SELECT * FROM [IM-Test-Database].[dbo].[Table];'''
@@ -98,4 +119,3 @@ print(sql_string)
 
 cursor.execute(sql_string)
 conn.commit()
-
