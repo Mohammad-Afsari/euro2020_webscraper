@@ -39,11 +39,11 @@ team_name = [i.text for i in team_name]
 classes = initial_soup.find("div",{"class":"team--statistics--list col-xs-12"})
 stats_arr = []
 for i in classes.stripped_strings:
-    stats_arr.append(repr(i))
+    stats_arr.append(i)
 
 # As the last value only shows 'Cards' we need to specify yellow/red cards
-stats_arr[22] = "'Yellow Cards'"
-stats_arr.insert(24,"'Red Cards'")
+stats_arr[(len(stats_arr)-3)] = 'Yellow Cards' # Change dynamic
+stats_arr.insert((len(stats_arr)-1),'Red Cards') # Change dynamic
 
 # Split into text string and values
 stats_textstr = stats_arr[0::2]
@@ -55,8 +55,6 @@ stats_values = pd.DataFrame({'col': stats_values})
 stats_merge = pd.merge(stats_textstr, stats_values, left_index=True, right_index=True)
 
 # Merge stats together
-stats_merge['col_x'] = stats_merge['col_x'].str.replace("'",'')
-stats_merge['col_y'] = stats_merge['col_y'].str.replace("'",'')
 stats = (stats_merge['col_x'] + "=" + stats_merge['col_y'])
 stats = pd.DataFrame({'Statistics':stats})
 
@@ -71,7 +69,6 @@ stats_str = ''.join(stats_list)
 limit = len(stats_str)
 statistics = stats_str[:limit - 1]
 statistics = team_name[0] + " Euro 2020 statistics: " + statistics
-
 
 #%%
 # -------------------------------------------------------------------------------------------------------------#
