@@ -54,6 +54,7 @@ This is a basic example of how you may give instructions on setting up your proj
    ```sh
    git clone https://github.com/Mohammad-Afsari/euro2020_webscraper.git
    ```
+3. Choose your favourite team and run rev01 script
 
 <!-- Contact -->
 ## Contact
