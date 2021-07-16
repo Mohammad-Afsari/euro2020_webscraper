@@ -51,6 +51,7 @@ This is a basic example of how you may give instructions on setting up your proj
 ### Installation
 1. Ensure you have the latest version of Anaconda installed (https://www.anaconda.com/products/individual {Python 3})
 2. Clone the repo
+
    ```sh
    git clone https://github.com/Mohammad-Afsari/euro2020_webscraper.git
    ```
